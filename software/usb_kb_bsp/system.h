@@ -2,9 +2,9 @@
  * system.h - SOPC Builder system and BSP software package information
  *
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'FPGAAudiosoc'
- * SOPC Builder design path: ../../FPGAAudiosoc.sopcinfo
+ * SOPC Builder design path: C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
  *
- * Generated: Mon Nov 07 21:41:01 CST 2022
+ * Generated: Mon Nov 07 22:28:23 CST 2022
  */
 
 /*
@@ -442,7 +442,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1667878675
+#define SYSID_QSYS_0_TIMESTAMP 1667880810
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 

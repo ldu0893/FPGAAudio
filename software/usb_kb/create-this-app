@@ -3,8 +3,8 @@
 # This script creates the blank_project application in this directory.
 
 
-BSP_DIR=../usb_kb_bsp
-QUARTUS_PROJECT_DIR=../../
+BSP_DIR=C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/software/usb_kb_bsp/
+QUARTUS_PROJECT_DIR=C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/
 NIOS2_APP_GEN_ARGS="--elf-name usb_kb.elf --no-src --set OBJDUMP_INCLUDE_SOURCE 1"
 
 

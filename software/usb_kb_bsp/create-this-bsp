@@ -4,8 +4,8 @@
 
 BSP_TYPE=hal
 BSP_DIR=.
-SOPC_DIR=../../
-SOPC_FILE=../../FPGAAudiosoc.sopcinfo
+SOPC_DIR=C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/
+SOPC_FILE=C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
 NIOS2_BSP_ARGS=""
 CPU_NAME=
 

@@ -101,7 +101,7 @@ ACDS_VERSION := 18.1
 # BUILD_NUMBER: 625
 
 SETTINGS_FILE := settings.bsp
-SOPC_FILE := ../../FPGAAudiosoc.sopcinfo
+SOPC_FILE := C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
 
 #-------------------------------------------------------------------------------
 #                             TOOL & COMMAND DEFINITIONS

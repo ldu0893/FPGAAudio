@@ -2,9 +2,9 @@
  * linker.h - Linker script mapping information
  *
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'FPGAAudiosoc'
- * SOPC Builder design path: ../../FPGAAudiosoc.sopcinfo
+ * SOPC Builder design path: C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
  *
- * Generated: Mon Nov 07 21:41:01 CST 2022
+ * Generated: Mon Nov 07 22:28:23 CST 2022
  */
 
 /*

@@ -86,7 +86,7 @@ ACDS_VERSION := 18.1
 
 # Qsys--generated SOPCINFO file. Required for resolving node instance ID's with 
 # design component names. 
-SOPCINFO_FILE := $(ABS_BSP_ROOT_DIR)/../../FPGAAudiosoc.sopcinfo
+SOPCINFO_FILE := C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
 
 # Big-Endian operation. 
 # setting BIG_ENDIAN is false
@@ -157,9 +157,9 @@ SOPC_SYSID_FLAG += --sidp=0x58
 ELF_PATCH_FLAG  += --sidp 0x58
 
 # The SOPC Timestamp 
-# setting SOPC_TIMESTAMP is 1667878675
-SOPC_SYSID_FLAG += --timestamp=1667878675
-ELF_PATCH_FLAG  += --timestamp 1667878675
+# setting SOPC_TIMESTAMP is 1667880810
+SOPC_SYSID_FLAG += --timestamp=1667880810
+ELF_PATCH_FLAG  += --timestamp 1667880810
 
 # Enable JTAG UART driver to recover when host is inactive causing buffer to 
 # full without returning error. Printf will not fail with this recovery. none 
