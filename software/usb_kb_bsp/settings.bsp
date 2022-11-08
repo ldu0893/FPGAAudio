@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Nov 7, 2022 11:23:25 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1667885005661</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Nov 8, 2022 1:33:35 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1667936015786</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Users\ldu08\OneDrive\Documents\Github\FPGAAudio\software\usb_kb_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>C:\Users\ldu08\OneDrive\Documents\Github\FPGAAudio\HDL\FPGAAudiosoc.sopcinfo</SopcDesignFile>

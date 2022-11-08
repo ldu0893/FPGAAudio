@@ -127,7 +127,7 @@ void printSignedHex1(signed char value) {
 
 void setKeycode(WORD keycode)
 {
-	IOWR_ALTERA_AVALON_PIO_DATA(0x8002000, keycode);
+	IOWR_ALTERA_AVALON_PIO_DATA(0x000001c0, keycode);
 }
 int main() {
 	BYTE rcode;
@@ -143,6 +143,9 @@ int main() {
 	MAX3421E_init();
 	printf("initializing USB...\n");
 	USB_init();
+//	BYTE revision = 0x18;
+//	BYTE test = MAXreg_rd(revision);
+//	printf("Revision: %x\n", test);
 	while (1) {
 		printf(".");
 		MAX3421E_Task();
@@ -210,6 +213,7 @@ int main() {
 				clearLED(9);
 				printf("USB Error State\n");
 				//print out string descriptor here
+
 			}
 		} else //not in USB running state
 		{
