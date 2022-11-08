@@ -42,7 +42,7 @@
 !/*.gitignore
 ##
 !*.qpf
-!*.qsf
+# !*.qsf
 # !*.qws
 !*.bdf
 !*.vhd
