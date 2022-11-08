@@ -220,7 +220,7 @@ refer to the applicable agreement for further details.
 		(text "export" (rect 197 603 430 1216)(font "Arial" (color 0 0 0)))
 		(text "usb_rst" (rect 148 619 338 1251)(font "Arial" (color 128 0 0)(font_size 9)))
 		(text "export" (rect 197 643 430 1296)(font "Arial" (color 0 0 0)))
-		(text " system " (rect 413 664 874 1338)(font "Arial" ))
+		(text " FPGAAudiosoc " (rect 378 664 840 1338)(font "Arial" ))
 		(line (pt 192 32)(pt 256 32)(line_width 1))
 		(line (pt 256 32)(pt 256 664)(line_width 1))
 		(line (pt 192 664)(pt 256 664)(line_width 1))
