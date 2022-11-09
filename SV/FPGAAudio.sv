@@ -146,10 +146,35 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		//LEDs and HEX
 		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode)
+		.keycode_export(keycode),
+		
+		//I2C
+		.i2c_sda_in(I2C_SDA_IN),
+		.i2c_scl_in(I2C_SCL_IN),
+		.i2c_sda_oe(I2C_SDA_OE),
+		.i2c_scl_oe(I2C_SCL_OE)
 		
 	 );
+	 
+	 
+//=======================================================
+//  Modifications
+//=======================================================
 
+logic I2C_SDA_IN, I2C_SCL_IN, I2C_SDA_OE, I2C_SCL_OE;//I2C inout
+assign I2C_SCL_IN = ARDUINO_IO[15];
+assign ARDUINO_IO[15] = I2C_SCL_OE ? 1'b0 : 1'bz;
+
+assign I2C_SDA_IN = ARDUINO_IO[14];
+assign ARDUINO_IO[14] = I2C_SDA_OE ? 1'b0 : 1'bz;
+	
+//12.5 MHz clk (needed for SGTL5000)
+logic [1:0] aud_mclk_ctr;
+assign ARDUINO_IO[3] = aud_mclk_ctr[1];
+always_ff @ (posedge MAX10_CLK1_50)
+begin
+	aud_mclk_ctr <= aud_mclk_ctr + 1;
+end
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 //logic [9:0] BallX, BallY, BallS, DrawX, DrawY;
