@@ -4,5 +4,9 @@
 !*.h
 !*.gitignore
 
+Makefile
+
 /dummy_project
 /dummy_project_bsp
+
+/*_bsp
