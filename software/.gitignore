@@ -5,6 +5,7 @@
 !*.gitignore
 
 Makefile
+create-this-app
 
 /dummy_project
 /dummy_project_bsp
