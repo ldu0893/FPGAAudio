@@ -42,7 +42,7 @@
 !/*.gitignore
 ##
 !*.qpf
-# !*.qsf
+!*.qsf
 # !*.qws
 !*.bdf
 !*.vhd
@@ -61,3 +61,5 @@
 !software/
 !HDL/
 !SV/
+
+!readme.txt
