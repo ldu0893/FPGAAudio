@@ -1,0 +1,8 @@
+*.*
+
+!*.c
+!*.h
+!*.gitignore
+
+/dummy_project
+/dummy_project_bsp
