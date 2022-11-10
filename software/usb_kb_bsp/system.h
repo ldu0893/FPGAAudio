@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'FPGAAudiosoc'
  * SOPC Builder design path: C:/Users/ldu08/OneDrive/Documents/Github/FPGAAudio/HDL/FPGAAudiosoc.sopcinfo
  *
- * Generated: Tue Nov 08 20:15:28 CST 2022
+ * Generated: Thu Nov 10 15:40:45 CST 2022
  */
 
 /*
@@ -460,7 +460,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1667956993
+#define SYSID_QSYS_0_TIMESTAMP 1667960490
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 

@@ -68,3 +68,7 @@ local.properties
 .sts4-cache/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
+
+settings.bsp
+/dummy_project
+/dummy_project_bsp

@@ -35,6 +35,10 @@ void MAXreg_wr(BYTE reg, BYTE val) {
 	//read return code from SPI peripheral (see Intel documentation) 
 	//if return code < 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
+	int return_code;
+	BYTE write[2] = {reg+2, val};
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 2, write, 0, NULL, 0);
+	if (return_code < 0) printf("Error in MAXreg_wr");
 }
 //multiple-byte write
 //returns a pointer to a memory position after last written
@@ -47,6 +51,22 @@ BYTE* MAXbytes_wr(BYTE reg, BYTE nbytes, BYTE* data) {
 	//if return code < 0  print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
+	int return_code;
+	reg+=2;
+	BYTE write[nbytes];
+
+//	write[0] = reg+2;
+	for (BYTE i=0; i<nbytes; i++) {
+		write[i] = data[i];
+	}
+
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 1, &reg, 0, NULL, ALT_AVALON_SPI_COMMAND_MERGE);
+	if (return_code < 0) printf("Error in MAXbytes_wr");
+
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, nbytes, write, 0, NULL, 0);
+	if (return_code < 0) printf("Error in MAXbytes_wr");
+
+	return (data+nbytes);
 }
 
 //reads register from MAX3421E via SPI
@@ -59,6 +79,16 @@ BYTE MAXreg_rd(BYTE reg) {
 	//if return code < 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return val
+	int return_code;
+	BYTE val;
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 1, &reg, 0, NULL, ALT_AVALON_SPI_COMMAND_MERGE);
+	if (return_code < 0) printf("Error in MAXreg_rd");
+
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 0, NULL, 1, &val, 0);
+	if (return_code < 0) printf("Error in MAXreg_rd");
+
+	return val;
+
 }
 //multiple-byte write
 //returns a pointer to a memory position after last written
@@ -71,6 +101,14 @@ BYTE* MAXbytes_rd(BYTE reg, BYTE nbytes, BYTE* data) {
 	//if return code < 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return (data + nbytes);
+	int return_code;
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 1, &reg, 0, NULL, ALT_AVALON_SPI_COMMAND_MERGE);
+	if (return_code < 0) printf("Error in MAXbytes_rd");
+
+	return_code = alt_avalon_spi_command(SPI_0_BASE, 0, 0, NULL, nbytes, data, 0);
+	if (return_code < 0) printf("Error in MAXbytes_rd");
+
+	return (data+nbytes);
 }
 /* reset MAX3421E using chip reset bit. SPI configuration is not affected   */
 void MAX3421E_reset(void) {
