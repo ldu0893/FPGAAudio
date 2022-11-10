@@ -1,7 +1,0 @@
-*.*
-
-!*.c
-!*.h
-
-/dummy_project
-/dummy_project_bsp
