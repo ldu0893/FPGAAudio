@@ -152,7 +152,13 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.i2c_sda_in(I2C_SDA_IN),
 		.i2c_scl_in(I2C_SCL_IN),
 		.i2c_sda_oe(I2C_SDA_OE),
-		.i2c_scl_oe(I2C_SCL_OE)
+		.i2c_scl_oe(I2C_SCL_OE),
+		
+		//I2S
+		.i2s_sclk(sclk),
+		.i2s_lrclk(lrclk),
+		.i2s_din(din),
+		.i2s_dout(dout)
 		
 	 );
 	 
@@ -161,6 +167,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //  Modifications
 //=======================================================
 
+
+//=======================================================
+//  I2C
+//=======================================================
 logic I2C_SDA_IN, I2C_SCL_IN, I2C_SDA_OE, I2C_SCL_OE;//I2C inout
 assign I2C_SCL_IN = ARDUINO_IO[15];
 assign ARDUINO_IO[15] = I2C_SCL_OE ? 1'b0 : 1'bz;
@@ -176,14 +186,12 @@ begin
 	aud_mclk_ctr <= aud_mclk_ctr + 1;
 end
 
-//instantiate a vga_controller, ball, and color_mapper here with the ports.
-//logic [9:0] BallX, BallY, BallS, DrawX, DrawY;
-//logic frame_clk;
-//always_ff @ (posedge VGA_VS)
-//begin
-//	frame_clk <= ~frame_clk;
-//end
-//ball ball0(.Reset(Reset_h), .frame_clk(frame_clk), .keycode(keycode), .BallX(BallX), .BallY(BallY), .BallS(BallS));
-//color_mapper color_mapper0(.BallX(BallX), .BallY(BallY), .DrawX(DrawX), .DrawY(DrawY), .Ball_size(BallS), .Red(Red), .Green(Green), .Blue(Blue));
-//vga_controller vga_controller0(.Clk(MAX10_CLK1_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS), .pixel_clk(VGA_clk), .blank(blank), .sync(sync), .DrawX(DrawX), .DrawY(DrawY));
+//=======================================================
+//  I2S
+//=======================================================
+logic sclk, lrclk, din, dout;
+assign ARDUINO_IO[5] = sclk;
+assign ARDUINO_IO[4] = lrclk;
+assign ARDUINO_IO[1] = din;
+assign ARDUINO_IO[2] = dout;//might need to swap
 endmodule

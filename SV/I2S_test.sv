@@ -1,4 +1,4 @@
-module I2S (
+module I2S_test (
 	input CLK,
 	input RESET,
 	
@@ -10,9 +10,15 @@ module I2S (
 	input ram_address,
 	input ram_write,
 	input [31:0] ram_writedata,
-	output [31:0] ram_readdata
+	output [31:0] ram_readdata,
+	
+	output [1:0] state_out,
+	output [31:0] channel_out,
+	output [4:0] counter_out
 	
 );
+
+
 
 logic [31:0] ram [2];
 
@@ -34,6 +40,10 @@ assign ram_readdata = ram[ram_address];
 logic [1:0] state = 1'b0;
 logic [31:0] channel;
 logic [4:0] counter;
+
+assign channel_out = channel;
+assign state_out = state;
+assign counter_out = counter;
 
 assign Dout = channel[31];
 
@@ -63,4 +73,3 @@ begin
 end
 
 endmodule
-
