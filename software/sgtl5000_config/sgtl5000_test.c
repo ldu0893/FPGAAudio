@@ -176,5 +176,6 @@ int main()
 	printf( "CHIP_PAD_STRENGTH register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_PAD_STRENGTH));
 
 
+
 	return 0;
 }

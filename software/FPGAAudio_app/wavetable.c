@@ -8,8 +8,11 @@
 #include "wavetable.h"
 
 void wavetableConfig() {
-	wavetable->VRAM[0] = 0xf0f0f0f0;
-	wavetable->VRAM[1] = 0xff00ff00;
+	wavetable->VRAM[0] = 0xff00ff00;
+	wavetable->VRAM[1] = 0x00000000;
+
+	printf("%x\n", wavetable->VRAM[0]);
+	printf("%x\n", wavetable->VRAM[1]);
 }
 
 

@@ -190,8 +190,8 @@ end
 //  I2S
 //=======================================================
 logic sclk, lrclk, din, dout;
-assign ARDUINO_IO[5] = sclk;
-assign ARDUINO_IO[4] = lrclk;
-assign ARDUINO_IO[1] = din;
+assign sclk = ARDUINO_IO[5];
+assign lrclk = ARDUINO_IO[4];
+assign din = ARDUINO_IO[1];
 assign ARDUINO_IO[2] = dout;//might need to swap
 endmodule
