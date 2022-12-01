@@ -5,13 +5,13 @@
  *      Author: ldu08
  */
 
-#include "wavetable.h"
+#include "wavetable.h"x
 
 void wavetableConfig() {
 	wavetable->VRAM[0] = 0x00000000;
 	wavetable->VRAM[1] = 0x0a000000;
 	wavetable->VRAM[2] = 0x00000000;
-	wavetable->VRAM[3] = -0x0a000000;
+	wavetable->VRAM[3] = 0x0a000000;
 
 	printf("%x\n", wavetable->VRAM[0]);
 	printf("%x\n", wavetable->VRAM[1]);

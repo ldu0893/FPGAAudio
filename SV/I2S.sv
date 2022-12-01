@@ -47,30 +47,98 @@ lsreg reg0(.CLK(SCLK), .RESET, .load(reg_load), .Din(reg_din), .Dout(Dout));
 logic [1:0] counter;
 logic [9:0] counter_counter;
 
-always_ff @ (posedge LRCLK)
+logic [23:0] scale [7];
+logic [8:0] scale_counter_counter [7];
+logic [1:0] scale_counter [7];
+logic [8:0] scale_counter_cap [7];
+
+logic [23:0] sum;
+
+assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + scale[6];
+
+always_comb
 begin
-	if (counter_counter == SW)
+	scale_counter_cap[6] = 200/2;
+	scale_counter_cap[5] = 179/2;
+	scale_counter_cap[4] = 169/2;
+	scale_counter_cap[3] = 150/2;
+	scale_counter_cap[2] = 134/2;
+	scale_counter_cap[1] = 126/2;
+	scale_counter_cap[0] = 112/2;
+end
+
+always_comb
+begin
+	for (int i=0;i<7;i=i+1)
 	begin
-		counter <= counter + 1;
-		counter_counter <= 0;
-	end
-	else
-	begin
-		counter_counter <= counter_counter + 1;
+		scale[i] = ram[scale_counter[i]];
 	end
 end
+
+always_ff @ (posedge LRCLK)
+begin
+	for (int i=0;i<7;i=i+1)
+	begin
+		if (scale_counter_counter[i] == scale_counter_cap[i])
+		begin
+			scale_counter[i] <= scale_counter[i] + 1;
+			scale_counter_counter[i] <= 0;
+		end
+		else
+		begin
+			if (SW[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+			else
+			begin
+				scale_counter_counter[i] <= 0;
+				scale_counter[i] <= 0;
+			end
+		end
+//		if (SW[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+//		else scale_counter_counter[i] <= 0;
+	end
+end
+
+//always_comb
+//begin
+//	for (int i=0;i<7;i++)
+//	begin
+//		if (scale_counter_counter[i] == scale_counter_cap[i])
+//		begin
+//			scale_counter[i] = scale_counter[i] + 1;
+////			scale_counter_counter[i] = 0;
+//		end
+////		else
+////		begin
+////			scale_counter_counter[i] = scale_counter_counter[i] + 1;
+////		end
+//		scale[i] = ram[scale_counter[i]];
+//	end
+//end
+
+//always_ff @ (posedge LRCLK)
+//begin
+//	if (counter_counter == SW)
+//	begin
+//		counter <= counter + 1;
+//		counter_counter <= 0;
+//	end
+//	else
+//	begin
+//		counter_counter <= counter_counter + 1;
+//	end
+//end
 
 always_ff @ (posedge SCLK)
 begin
 	if (!state && LRCLK)
 	begin
-		reg_din <= ram[counter];
+		reg_din <= sum;
 		reg_load <= 1;
 		state <= 1;
 	end
 	else if (state && !LRCLK)
 	begin
-		reg_din <= ram[counter];
+		reg_din <= sum;
 		reg_load <= 1;
 		state <= 0;
 	end
