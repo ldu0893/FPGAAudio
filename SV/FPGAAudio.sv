@@ -52,7 +52,6 @@ module FPGAAudio (
 
 logic Reset_h, vssig, blank, sync, VGA_Clk;
 
-
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================
@@ -159,8 +158,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.i2s_lrclk(lrclk),
 		.i2s_din(din),
 		.i2s_dout(dout),
-		.i2s_sw(SW)
-		
+		.i2s_sw(SW),
+		.i2s_keycode(keycode )
 	 );
 	 
 	 
