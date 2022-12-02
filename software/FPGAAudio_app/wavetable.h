@@ -12,7 +12,7 @@
 #include <alt_types.h>
 
 struct WAVETABLE_STRUCT {
-	alt_u32 VRAM[2];
+	alt_u32 VRAM[8];
 };
 
 static volatile struct WAVETABLE_STRUCT* wavetable = I2S_0_BASE;

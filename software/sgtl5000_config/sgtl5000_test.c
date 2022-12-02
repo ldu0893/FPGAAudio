@@ -175,10 +175,10 @@ int main()
 	printf( "CHIP_ADCDAC_CTRL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_ADCDAC_CTRL));
 	printf( "CHIP_PAD_STRENGTH register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_PAD_STRENGTH));
 
-//	printf( "----------CUSTOM SETTINGS----------\n");
-//	WORD DAC_VOL = 0xa7a7;//-? dB
-//	SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_DAC_VOL, DAC_VOL);
-//	printf( "CHIP_DAC_VOL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_DAC_VOL));
+	printf( "----------CUSTOM SETTINGS----------\n");
+	WORD DAC_VOL = 0x3C3C;//-? dB
+	SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_DAC_VOL, DAC_VOL);
+	printf( "CHIP_DAC_VOL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_DAC_VOL));
 
 
 	return 0;

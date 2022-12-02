@@ -1,4 +1,5 @@
-`define RAM_SIZE 4
+`define RAM_SIZE 8
+`define LOG_SCALE 3
 
 module I2S (
 	input CLK,
@@ -11,7 +12,7 @@ module I2S (
 	
 	input [9:0] SW,
 	
-	input [1:0] ram_address,
+	input [2:0] ram_address,
 	input ram_write,
 	input [31:0] ram_writedata,
 	output [31:0] ram_readdata
@@ -49,7 +50,7 @@ logic [9:0] counter_counter;
 
 logic [23:0] scale [7];
 logic [8:0] scale_counter_counter [7];
-logic [1:0] scale_counter [7];
+logic [`LOG_SCALE:0] scale_counter [7];
 logic [8:0] scale_counter_cap [7];
 
 logic [23:0] sum;
@@ -58,13 +59,14 @@ assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + s
 
 always_comb
 begin
-	scale_counter_cap[6] = 200/2;
-	scale_counter_cap[5] = 179/2;
-	scale_counter_cap[4] = 169/2;
-	scale_counter_cap[3] = 150/2;
-	scale_counter_cap[2] = 134/2;
-	scale_counter_cap[1] = 126/2;
-	scale_counter_cap[0] = 112/2;
+// 1/(piano Hz) * 44.1kHz (sampling freq)
+	scale_counter_cap[6] = 200 >> `LOG_SCALE; //A
+	scale_counter_cap[5] = 179 >> `LOG_SCALE; //B
+	scale_counter_cap[4] = 169 >> `LOG_SCALE; //C
+	scale_counter_cap[3] = 150 >> `LOG_SCALE; //D
+	scale_counter_cap[2] = 134 >> `LOG_SCALE; //E
+	scale_counter_cap[1] = 126 >> `LOG_SCALE; //F
+	scale_counter_cap[0] = 111 >> `LOG_SCALE; //G
 end
 
 always_comb
