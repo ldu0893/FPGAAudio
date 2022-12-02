@@ -1,5 +1,5 @@
 `define RAM_SIZE 8
-`define LOG_SCALE 3
+`define LOG_SCALE 10
 
 module I2S (
 	input CLK,
