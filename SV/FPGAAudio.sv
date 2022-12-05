@@ -160,7 +160,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.i2s_din(din),
 		.i2s_dout(dout),
 		.i2s_sw(SW),
-		.i2s_keycode(keycode)
+		.i2s_keycode(keycode),
+		.i2s_song(song),
+		
+		.song_export(song)
 		
 	 );
 	 
@@ -168,6 +171,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //=======================================================
 //  Modifications
 //=======================================================
+
+logic [31:0] song;
 
 
 //=======================================================
