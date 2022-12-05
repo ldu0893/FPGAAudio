@@ -10,18 +10,21 @@ int main()
 	printf("ALIVE\n");
 
 
-	*LED_PIO = 0; //clear all LEDs
-	while ( (1+1) != 3) //infinite loop
-	{
-		for (i = 0; i < 100000; i++); //software delay
-		*LED_PIO |= 0x1; //set LSB
-		for (i = 0; i < 100000; i++); //software delay
-		*LED_PIO &= ~0x1; //clear LSB
-//		printSignedHex0(1);
-//		printSignedHex1(23);
-	}
+//	*LED_PIO = 0; //clear all LEDs
+//	while ( (1+1) != 3) //infinite loop
+//	{
+//		for (i = 0; i < 100000; i++); //software delay
+//		*LED_PIO |= 0x1; //set LSB
+//		for (i = 0; i < 100000; i++); //software delay
+//		*LED_PIO &= ~0x1; //clear LSB
+////		printSignedHex0(1);
+////		printSignedHex1(23);
+//	}
 
+	DWORD song;
+	song = 0x04070a00;
 
+	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
 
 
 	return 1; //never gets here

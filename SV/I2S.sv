@@ -12,6 +12,7 @@ module I2S (
 	
 	input [9:0] SW,
 	input [31:0] keycode,
+	input [31:0] song,
 	
 	input [2:0] ram_address,
 	input ram_write,
@@ -119,7 +120,11 @@ begin
 			if (keycode[7:0] == keycode_maps[i] ||
 				 keycode[15:8] == keycode_maps[i] ||
 				 keycode[23:16] == keycode_maps[i] ||
-				 keycode[31:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+				 keycode[31:24] == keycode_maps[i] ||
+				 song[7:0] == keycode_maps[i] ||
+				 song[15:8] == keycode_maps[i] ||
+				 song[23:16] == keycode_maps[i] ||
+				 song[32:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
 			else
 			begin
 				scale_counter_counter[i] <= 0;
