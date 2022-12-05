@@ -125,9 +125,11 @@ void printSignedHex1(signed char value) {
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
 }
 
-void setKeycode(WORD keycode)
+void setKeycode(BYTE* keycode)
 {
-	IOWR_ALTERA_AVALON_PIO_DATA(0x000001c0, keycode);
+	DWORD keycodes;
+	keycodes = (keycode[0] << 24) | (keycode[1] << 16) | (keycode[2] << 8) | keycode[3];
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_BASE, keycodes);
 }
 int main() {
 	BYTE rcode;
@@ -170,7 +172,7 @@ int main() {
 				for (int i = 0; i < 6; i++) {
 					printf("%x ", kbdbuf.keycode[i]);
 				}
-				setKeycode(kbdbuf.keycode[0]);
+				setKeycode(&kbdbuf.keycode);
 				printSignedHex0(kbdbuf.keycode[0]);
 				printSignedHex1(kbdbuf.keycode[1]);
 				printf("\n");

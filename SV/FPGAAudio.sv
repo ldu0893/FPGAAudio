@@ -62,7 +62,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [1:0] hundreds;
 	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
 	logic [7:0] Red, Blue, Green;
-	logic [7:0] keycode;
+	logic [31:0] keycode;
 
 //=======================================================
 //  Structural coding
@@ -159,7 +159,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.i2s_lrclk(lrclk),
 		.i2s_din(din),
 		.i2s_dout(dout),
-		.i2s_sw(SW)
+		.i2s_sw(SW),
+		.i2s_keycode(keycode)
 		
 	 );
 	 

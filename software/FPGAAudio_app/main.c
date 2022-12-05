@@ -17,8 +17,8 @@ int main()
 		*LED_PIO |= 0x1; //set LSB
 		for (i = 0; i < 100000; i++); //software delay
 		*LED_PIO &= ~0x1; //clear LSB
-		printSignedHex0(1);
-		printSignedHex1(23);
+//		printSignedHex0(1);
+//		printSignedHex1(23);
 	}
 
 
