@@ -11,6 +11,7 @@ module I2S (
 	output Dout,
 	
 	input [9:0] SW,
+	input [31:0] keycode,
 	
 	input [2:0] ram_address,
 	input ram_write,
@@ -48,30 +49,57 @@ lsreg reg0(.CLK(SCLK), .RESET, .load(reg_load), .Din(reg_din), .Dout(Dout));
 logic [1:0] counter;
 logic [9:0] counter_counter;
 
-logic [23:0] scale [7];
-logic [8:0] scale_counter_counter [7];
-logic [`LOG_SCALE:0] scale_counter [7];
-logic [8:0] scale_counter_cap [7];
+logic [23:0] scale [12];
+logic [8:0] scale_counter_counter [12];
+logic [`LOG_SCALE:0] scale_counter [12];
+logic [8:0] scale_counter_cap [12];
+
+logic [7:0] keycode_maps [12];
+
+always_comb
+begin
+	keycode_maps[4] = 8'h04;//C
+	keycode_maps[3] = 8'h16;//D
+	keycode_maps[2] = 8'h07;//E
+	keycode_maps[1] = 8'h09;//F
+	keycode_maps[0] = 8'h0a;//G
+	keycode_maps[6] = 8'h0b;//A
+	keycode_maps[5] = 8'h0d;//B
+	
+	keycode_maps[7] = 8'h1a;//C#
+	keycode_maps[8] = 8'h08;//D#
+	keycode_maps[9] = 8'h17;//F#
+	keycode_maps[10] = 8'h1c;//G#
+	keycode_maps[11] = 8'h18;//A#
+
+end
 
 logic [23:0] sum;
 
-assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + scale[6];
+assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + scale[6] + scale[7] + scale[8] + scale[9] + scale[10] + scale[11];
 
 always_comb
 begin
 // 1/(piano Hz) * 44.1kHz (sampling freq)
-	scale_counter_cap[6] = 200 >> `LOG_SCALE; //A
-	scale_counter_cap[5] = 179 >> `LOG_SCALE; //B
-	scale_counter_cap[4] = 169 >> `LOG_SCALE; //C
-	scale_counter_cap[3] = 150 >> `LOG_SCALE; //D
-	scale_counter_cap[2] = 134 >> `LOG_SCALE; //E
-	scale_counter_cap[1] = 126 >> `LOG_SCALE; //F
-	scale_counter_cap[0] = 111 >> `LOG_SCALE; //G
+	scale_counter_cap[6] = 100 / 4; //A
+//	scale_counter_cap[6] = 3;
+	scale_counter_cap[5] = 89 / 4; //B
+	scale_counter_cap[4] = 169 / 4; //C
+	scale_counter_cap[3] = 150 / 4; //D
+	scale_counter_cap[2] = 134 / 4; //E
+	scale_counter_cap[1] = 126 / 4; //F
+	scale_counter_cap[0] = 112 / 4; //G
+	
+	scale_counter_cap[7] = 159 / 4; //C#
+	scale_counter_cap[8] = 142 / 4; //D#
+	scale_counter_cap[9] = 119 / 4; //F#
+	scale_counter_cap[10] = 106 / 4; //G#
+	scale_counter_cap[11] = 95 / 4; //A#
 end
 
 always_comb
 begin
-	for (int i=0;i<7;i=i+1)
+	for (int i=0;i<12;i=i+1)
 	begin
 		scale[i] = ram[scale_counter[i]];
 	end
@@ -79,16 +107,19 @@ end
 
 always_ff @ (posedge LRCLK)
 begin
-	for (int i=0;i<7;i=i+1)
+	for (int i=0;i<12;i=i+1)
 	begin
-		if (scale_counter_counter[i] == scale_counter_cap[i])
+		if (scale_counter_counter[i] >= scale_counter_cap[i])
 		begin
 			scale_counter[i] <= scale_counter[i] + 1;
 			scale_counter_counter[i] <= 0;
 		end
 		else
 		begin
-			if (SW[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+			if (keycode[7:0] == keycode_maps[i] ||
+				 keycode[15:8] == keycode_maps[i] ||
+				 keycode[23:16] == keycode_maps[i] ||
+				 keycode[31:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
 			else
 			begin
 				scale_counter_counter[i] <= 0;
