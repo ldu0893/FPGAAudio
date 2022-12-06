@@ -41,57 +41,57 @@ int main()
 	 */
 	int space = 100000;
 	song = 0x07000000; //e
-	usleep(space);
+	tempo(song, space);
 	song = 0x16000000; // d
-	usleep(space);
+	tempo(song, space);
 	song = 0x04000000; //c
-	usleep(space);
+	tempo(song, space);
 	song = 0x16000000; //d
-	usleep(space);
+	tempo(song, space);
 	song = 0x07000000; //e
-	usleep(space/2);
+	tempo(song, space/2);
 	song = 0;
-	usleep(space/2);
+	tempo(song, space/2);
 	song = 0x07000000; //e
-	usleep(space/2);
+	tempo(song, space/2);
 	song = 0;
-	usleep(space/2);
+	tempo(song, space/2);
 	song = 0x07000000; //e
-	usleep(space);
+	tempo(song, space);
 	song = 0;
-	usleep(space);
+	tempo(song, space);
 	song = 0x16000000; //d
-	usleep(space / 2);
+	tempo(song, space/2);
 	song = 0;
-	usleep(space / 2) ;
+	tempo(song, space/2);
 	song = 0x16000000; //d
-	usleep(space / 2);
+	tempo(song, space/2);
 	song = 0;
-	usleep (space / 2);
+	tempo(song, space/2);
 	song = 0x16000000; //d
-	usleep(space);
+	tempo(song, space);
 	song = 0;
-	usleep(space);
+	tempo(song, space);
 	song = 0x07000000;// e
-	usleep(space);
+	tempo(song, space);
 	song = 0x0a000000; //g
-	usleep(space / 2);
+	tempo(song, space/2);
 	song = 0;
-	usleep(space/ 2);
+	tempo(song, space/2);
 	song = 0x0a000000;//g
-	usleep ( space/2);
+	tempo(song, space/2);
 	song = 0;
-	usleep(space/2);
+	tempo(song, space/2);
 	song = 0x0a000000; //g
-	usleep(space);
+	tempo(song, space);
 	song = 0;
-	usleep(space);
+	tempo(song, space);
 	song = 0x07000000; //e
-	usleep(space);
+	tempo(song, space);
 	song = 0x16000000; //d
-	usleep(space);
+	tempo(song, space);
 	song = 0x04000000; //c
-	usleep(space);
+	tempo(song, space);
 
 //	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
 
@@ -132,11 +132,9 @@ void printSignedHex1(signed char value) {
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
 }
 
-void tempo(int space) {
-	int i;
-	for (i = 0 ; i <  space ; i += 1) {
-
-	}
+void tempo(DWORD song, int space) {
+	usleep(space);
+	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE,song);
 
 }
 void mary() {
