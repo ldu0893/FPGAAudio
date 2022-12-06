@@ -24,19 +24,19 @@ void wavetableConfig() {
 }
 
 void timingConfig() {
-	timing->VRAM[4] = 169/4;//C
-	timing->VRAM[3] = 150/4;//D
-	timing->VRAM[2] = 134/4;//E
-	timing->VRAM[1] = 126/4;//F
-	timing->VRAM[0] = 112/8;//G
-	timing->VRAM[6] = 100/4;//A
-	timing->VRAM[5] = 89/4;//B
+	timing->VRAM[4] = 169/8;//C
+	timing->VRAM[3] = 150/8;//D
+	timing->VRAM[2] = 134/8;//E
+	timing->VRAM[1] = 126/8;//F
+	timing->VRAM[0] = 13;//G
+	timing->VRAM[6] = 100/8;//A
+	timing->VRAM[5] = 89/8;//B
 
-	timing->VRAM[7] = 159/4;//C#
-	timing->VRAM[8] = 142/4;//D#
-	timing->VRAM[9] = 119/4;//F#
-	timing->VRAM[10] = 106/4;//G#
-	timing->VRAM[11] = 95/4;//A#
+	timing->VRAM[7] = 159/8;//C#
+	timing->VRAM[8] = 142/8;//D#
+	timing->VRAM[9] = 119/8;//F#
+	timing->VRAM[10] = 106/8;//G#
+	timing->VRAM[11] = 95/8;//A#
 
 	for (int i=0;i<12;i++) {
 		printf("%x\n", timing->VRAM[i]);

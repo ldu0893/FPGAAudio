@@ -7,6 +7,7 @@ int main()
 	int i = 0;
 	volatile unsigned int *LED_PIO = (unsigned int*)0x170; //make a pointer to access the PIO block
 	wavetableConfig();
+	timingConfig();
 	printf("ALIVE\n");
 
 
@@ -24,7 +25,7 @@ int main()
 	DWORD song;
 	song = 0x04070a00;
 
-	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
+//	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
 
 
 	return 1; //never gets here
