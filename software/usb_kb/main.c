@@ -155,6 +155,7 @@ int main() {
 //	BYTE revision = 0x18;
 //	BYTE test = MAXreg_rd(revision);
 //	printf("Revision: %x\n", test);
+	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE,0);//no song
 	while (1) {
 		printf(".");
 		MAX3421E_Task();

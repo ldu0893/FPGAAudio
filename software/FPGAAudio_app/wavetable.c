@@ -28,7 +28,7 @@ void timingConfig() {
 	timing->VRAM[3] = 150/4;//D
 	timing->VRAM[2] = 134/4;//E
 	timing->VRAM[1] = 126/4;//F
-	timing->VRAM[0] = 112/8;//G
+	timing->VRAM[0] = 112/4;//G
 	timing->VRAM[6] = 100/4;//A
 	timing->VRAM[5] = 89/4;//B
 

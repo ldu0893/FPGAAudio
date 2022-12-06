@@ -76,19 +76,19 @@ logic [7:0] keycode_maps [12];
 
 always_comb
 begin
-	keycode_maps[4] = 8'h04;//C
-	keycode_maps[3] = 8'h16;//D
-	keycode_maps[2] = 8'h07;//E
-	keycode_maps[1] = 8'h09;//F
-	keycode_maps[0] = 8'h0a;//G
-	keycode_maps[6] = 8'h0b;//A
-	keycode_maps[5] = 8'h0d;//B
+	keycode_maps[4] = 8'h14;//C
+	keycode_maps[3] = 8'h1a;//D
+	keycode_maps[2] = 8'h08;//E
+	keycode_maps[1] = 8'h15;//F
+	keycode_maps[0] = 8'h17;//G
+	keycode_maps[6] = 8'h1c;//A
+	keycode_maps[5] = 8'h18;//B
 	
-	keycode_maps[7] = 8'h1a;//C#
-	keycode_maps[8] = 8'h08;//D#
-	keycode_maps[9] = 8'h17;//F#
-	keycode_maps[10] = 8'h1c;//G#
-	keycode_maps[11] = 8'h18;//A#
+	keycode_maps[7] = 8'h1f;//C#
+	keycode_maps[8] = 8'h20;//D#
+	keycode_maps[9] = 8'h22;//F#
+	keycode_maps[10] = 8'h23;//G#
+	keycode_maps[11] = 8'h24;//A#
 
 end
 
