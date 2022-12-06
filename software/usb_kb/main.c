@@ -132,6 +132,13 @@ void setKeycode(BYTE* keycode)
 	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_BASE, keycodes);
 }
 int main() {
+
+	wavetableConfig();
+	timingConfig();
+
+
+
+
 	BYTE rcode;
 	BOOT_MOUSE_REPORT buf;		//USB mouse report
 	BOOT_KBD_REPORT kbdbuf;

@@ -17,11 +17,28 @@ module I2S (
 	input [2:0] ram_address,
 	input ram_write,
 	input [31:0] ram_writedata,
-	output [31:0] ram_readdata
+	output [31:0] ram_readdata,
+	
+	input [4:0] timing_address,
+	input timing_write,
+	input [15:0] timing_writedata,
+	output [15:0] timing_readdata
 	
 );
 
 logic [23:0] ram [`RAM_SIZE];
+logic [15:0] timing [32];
+
+always_ff @ (posedge CLK or posedge RESET)
+begin
+	if (RESET)
+	begin
+		for (int i=0;i<32;i++) timing[i] <= 0;
+	end
+	else if (timing_write) timing[timing_address] <= timing_writedata;
+end
+
+assign timing_readdata = timing[timing_address];
 
 always_ff @ (posedge CLK or posedge RESET)
 begin
@@ -82,20 +99,21 @@ assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + s
 always_comb
 begin
 // 1/(piano Hz) * 44.1kHz (sampling freq)
-	scale_counter_cap[6] = 100 / 4; //A
-//	scale_counter_cap[6] = 3;
-	scale_counter_cap[5] = 89 / 4; //B
-	scale_counter_cap[4] = 169 / 4; //C
-	scale_counter_cap[3] = 150 / 4; //D
-	scale_counter_cap[2] = 134 / 4; //E
-	scale_counter_cap[1] = 126 / 4; //F
-	scale_counter_cap[0] = 112 / 4; //G
+//	scale_counter_cap[6] = 100 / 4; //A
+//	scale_counter_cap[5] = 89 / 4; //B
+//	scale_counter_cap[4] = 169 / 4; //C
+//	scale_counter_cap[3] = 150 / 4; //D
+//	scale_counter_cap[2] = 134 / 4; //E
+//	scale_counter_cap[1] = 126 / 4; //F
+//	scale_counter_cap[0] = 112 / 4; //G
+//	
+//	scale_counter_cap[7] = 159 / 4; //C#
+//	scale_counter_cap[8] = 142 / 4; //D#
+//	scale_counter_cap[9] = 119 / 4; //F#
+//	scale_counter_cap[10] = 106 / 4; //G#
+//	scale_counter_cap[11] = 95 / 4; //A#
 	
-	scale_counter_cap[7] = 159 / 4; //C#
-	scale_counter_cap[8] = 142 / 4; //D#
-	scale_counter_cap[9] = 119 / 4; //F#
-	scale_counter_cap[10] = 106 / 4; //G#
-	scale_counter_cap[11] = 95 / 4; //A#
+	for (int i=0;i<12;i++) scale_counter_cap[i] = timing[i];
 end
 
 always_comb
