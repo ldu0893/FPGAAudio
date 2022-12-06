@@ -12,7 +12,7 @@ int main()
 
 
 //	*LED_PIO = 0; //clear all LEDs
-//	while ( (1+1) != 3) //infinite loop
+	while ( (1+1) != 3) { //infinite loop
 //	{
 //		for (i = 0; i < 100000; i++); //software delay
 //		*LED_PIO |= 0x1; //set LSB
@@ -21,77 +21,25 @@ int main()
 ////		printSignedHex0(1);
 ////		printSignedHex1(23);
 //	}
-
-	DWORD song;
+	mary();
+	}
 	//song == 0x04070a00;
 	/*
 
-	 'h04;//C
-	'h16;//D
-	'h07;//E
-	'h09;//F
-	'h0a;//G
-	'h0b;//A
-	'h0d;//B
-	'h1a;//C#
-	'h08;//D#
-	'h17;//F#
-	'h1c;//G#
-	'h18;//A#
+	 'h14;//C
+	'h1a;//D
+	'h08;//E
+	'h15;//F
+	'h17;//G
+	'h1c;//A
+	'h18;//B
+	'h1f;//C#
+	'h20;//D#
+	'h22;//F#
+	'h23;//G#
+	'h24;//A#
 	 */
-	int space = 100000;
-	song = 0x07000000; //e
-	tempo(song, space);
-	song = 0x16000000; // d
-	tempo(song, space);
-	song = 0x04000000; //c
-	tempo(song, space);
-	song = 0x16000000; //d
-	tempo(song, space);
-	song = 0x07000000; //e
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x07000000; //e
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x07000000; //e
-	tempo(song, space);
-	song = 0;
-	tempo(song, space);
-	song = 0x16000000; //d
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x16000000; //d
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x16000000; //d
-	tempo(song, space);
-	song = 0;
-	tempo(song, space);
-	song = 0x07000000;// e
-	tempo(song, space);
-	song = 0x0a000000; //g
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x0a000000;//g
-	tempo(song, space/2);
-	song = 0;
-	tempo(song, space/2);
-	song = 0x0a000000; //g
-	tempo(song, space);
-	song = 0;
-	tempo(song, space);
-	song = 0x07000000; //e
-	tempo(song, space);
-	song = 0x16000000; //d
-	tempo(song, space);
-	song = 0x04000000; //c
-	tempo(song, space);
+
 
 //	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
 
@@ -138,5 +86,82 @@ void tempo(DWORD song, int space) {
 
 }
 void mary() {
-
+	DWORD song;
+	int space = 100000;
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0x1a000000; // d
+		tempo(song, space);
+		song = 0x14000000; //c
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x1a000000; //d
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x08000000;// e
+		tempo(song, space);
+		song = 0x0a000000; //g
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x0a000000;//g
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x14000000; //c
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song,space/2);
+		song = 0;
+		tempo(song, space / 2);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song,space/2);
+		song = 0x08000000; // e
+		tempo(song,space);
+		song = 0;
+		tempo(song,space);
+		song = 0x1a000000; //d
+		tempo(song,space / 2);
+		song = 0;
+		tempo(song,space/2);
+		song = 0x1a000000; //d
+		tempo(song,space);
+		song = 0x08000000; //e
+		tempo(song,space);
+		song = 0x1a000000; //d
+		tempo(song,space);
+		song = 0x14000000; //c
+		tempo(song,space);
+		song = 0;
+		tempo(song,space);
 }
