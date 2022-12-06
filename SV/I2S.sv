@@ -124,7 +124,7 @@ begin
 				 song[7:0] == keycode_maps[i] ||
 				 song[15:8] == keycode_maps[i] ||
 				 song[23:16] == keycode_maps[i] ||
-				 song[32:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+				 song[31:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
 			else
 			begin
 				scale_counter_counter[i] <= 0;
