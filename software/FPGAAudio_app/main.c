@@ -165,3 +165,22 @@ void mary() {
 		song = 0;
 		tempo(song,space);
 }
+void twinkle() {
+	DWORD song;
+	int space = 50000;
+	/* 'h14;//C
+		'h1a;//D
+		'h08;//E
+		'h15;//F
+		'h17;//G
+		'h1c;//A
+		'h18;//B
+		'h1f;//C#
+		'h20;//D#
+		'h22;//F#
+		'h23;//G#
+		'h24;//A# */
+
+
+
+}
