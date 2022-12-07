@@ -24,19 +24,36 @@ void wavetableConfig() {
 }
 
 void timingConfig() {
-	timing->VRAM[4] = 169/8;//C
-	timing->VRAM[3] = 150/8;//D
-	timing->VRAM[2] = 134/8;//E
-	timing->VRAM[1] = 126/8;//F
-	timing->VRAM[0] = 13;//G
-	timing->VRAM[6] = 100/8;//A
-	timing->VRAM[5] = 89/8;//B
+	int div = 2;
+	timing->VRAM[4] = 169/div/2;//C
+	timing->VRAM[3] = 150/div/2;//D
+	timing->VRAM[2] = 134/div/2;//E
+	timing->VRAM[1] = 126/div/2;//F
+	timing->VRAM[0] = 112/div/2;//G
+	timing->VRAM[6] = 100/div/2;//A
+	timing->VRAM[5] = 89/div/2;//B
 
-	timing->VRAM[7] = 159/8;//C#
-	timing->VRAM[8] = 142/8;//D#
-	timing->VRAM[9] = 119/8;//F#
-	timing->VRAM[10] = 106/8;//G#
-	timing->VRAM[11] = 95/8;//A#
+	timing->VRAM[7] = 159/div/2;//C#
+	timing->VRAM[8] = 142/div/2;//D#
+	timing->VRAM[9] = 119/div/2;//F#
+	timing->VRAM[10] = 106/div/2;//G#
+	timing->VRAM[11] = 95/div/2;//A#
+
+
+
+	timing->VRAM[23] = 169/div;//C
+	timing->VRAM[22] = 150/div;//D
+	timing->VRAM[21] = 134/div;//E
+	timing->VRAM[20] = 126/div;//F
+	timing->VRAM[19] = 112/div;//G
+	timing->VRAM[18] = 100/div;//A
+	timing->VRAM[17] = 89/div;//B
+
+	timing->VRAM[16] = 159/div;//C#
+	timing->VRAM[15] = 142/div;//D#
+	timing->VRAM[14] = 119/div;//F#
+	timing->VRAM[13] = 106/div;//G#
+	timing->VRAM[12] = 95/div;//A#
 
 	for (int i=0;i<12;i++) {
 		printf("%x\n", timing->VRAM[i]);

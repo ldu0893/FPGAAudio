@@ -10,24 +10,15 @@ int main()
 	timingConfig();
 	printf("ALIVE\n");
 
+	while (1) {
+		mary();
 
-//	*LED_PIO = 0; //clear all LEDs
-//	while ( (1+1) != 3) //infinite loop
-//	{
-//		for (i = 0; i < 100000; i++); //software delay
-//		*LED_PIO |= 0x1; //set LSB
-//		for (i = 0; i < 100000; i++); //software delay
-//		*LED_PIO &= ~0x1; //clear LSB
-////		printSignedHex0(1);
-////		printSignedHex1(23);
-//	}
+		DWORD song = 0;
+		int space = 100000;
 
-	DWORD song;
-	song = 0x04070a00;
-
-//	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, song);
-
-
+		IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE,song);
+		usleep(space*5);
+}
 	return 1; //never gets here
 }
 
@@ -62,4 +53,91 @@ void printSignedHex1(signed char value) {
 	pio_val |= (ones << 0);
 
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
+}
+
+void tempo(DWORD song, int space) {
+	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE,song);
+	usleep(space);
+
+}
+
+void mary() {
+	DWORD song;
+	int space = 100000;
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0x1a000000; // d
+		tempo(song, space);
+		song = 0x14000000; //c
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x1a000000; //d
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x08000000;// e
+		tempo(song, space);
+		song = 0x17000000; //g
+		tempo(song, space/2);
+		song = 0;
+		tempo(song, space/2);
+		song = 0x17000000;//g
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x14000000; //c
+		tempo(song, space);
+		song = 0x1a000000; //d
+		tempo(song, space);
+		song = 0x08000000; //e
+		tempo(song,space/2);
+		song = 0;
+		tempo(song, space / 2);
+		song = 0x08000000; //e
+		tempo(song, space/2);
+		song = 0;
+		tempo(song,space/2);
+		song = 0x08000000; // e
+		tempo(song,space);
+		song = 0;
+		tempo(song,space);
+		song = 0x1a000000; //d
+		tempo(song,space / 2);
+		song = 0;
+		tempo(song,space/2);
+		song = 0x1a000000; //d
+		tempo(song,space);
+		song = 0x08000000; //e
+		tempo(song,space);
+		song = 0x1a000000; //d
+		tempo(song,space);
+		song = 0x14000000; //c
+		tempo(song,space);
+		song = 0;
+		tempo(song,space);
 }

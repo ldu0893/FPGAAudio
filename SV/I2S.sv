@@ -1,6 +1,8 @@
 `define RAM_SIZE 8
 `define LOG_SCALE 10
 
+`define NOTES 24
+
 module I2S (
 	input CLK,
 	input RESET,
@@ -67,34 +69,53 @@ lsreg reg0(.CLK(SCLK), .RESET, .load(reg_load), .Din(reg_din), .Dout(Dout));
 logic [1:0] counter;
 logic [9:0] counter_counter;
 
-logic [23:0] scale [12];
-logic [8:0] scale_counter_counter [12];
-logic [`LOG_SCALE:0] scale_counter [12];
-logic [8:0] scale_counter_cap [12];
+logic [23:0] scale [`NOTES];
+logic [8:0] scale_counter_counter [`NOTES];
+logic [`LOG_SCALE:0] scale_counter [`NOTES];
+logic [8:0] scale_counter_cap [`NOTES];
 
-logic [7:0] keycode_maps [12];
+logic [7:0] keycode_maps [`NOTES];
 
 always_comb
 begin
-	keycode_maps[4] = 8'h04;//C
-	keycode_maps[3] = 8'h16;//D
-	keycode_maps[2] = 8'h07;//E
-	keycode_maps[1] = 8'h09;//F
-	keycode_maps[0] = 8'h0a;//G
-	keycode_maps[6] = 8'h0b;//A
-	keycode_maps[5] = 8'h0d;//B
+	keycode_maps[4] = 8'h14;//C
+	keycode_maps[3] = 8'h1a;//D
+	keycode_maps[2] = 8'h08;//E
+	keycode_maps[1] = 8'h15;//F
+	keycode_maps[0] = 8'h17;//G
+	keycode_maps[6] = 8'h1c;//A
+	keycode_maps[5] = 8'h18;//B
 	
-	keycode_maps[7] = 8'h1a;//C#
-	keycode_maps[8] = 8'h08;//D#
-	keycode_maps[9] = 8'h17;//F#
-	keycode_maps[10] = 8'h1c;//G#
-	keycode_maps[11] = 8'h18;//A#
+	keycode_maps[7] = 8'h1f;//C#
+	keycode_maps[8] = 8'h20;//D#
+	keycode_maps[9] = 8'h22;//F#
+	keycode_maps[10] = 8'h23;//G#
+	keycode_maps[11] = 8'h24;//A#
+	
+	keycode_maps[23] = 8'h1d;//same config, lower reg
+	keycode_maps[22] = 8'h1b;
+	keycode_maps[21] = 8'h6;
+	keycode_maps[20] = 8'h19;
+	keycode_maps[19] = 8'h5;
+	keycode_maps[18] = 8'h11;
+	keycode_maps[17] = 8'h10;
+
+	keycode_maps[16] = 8'h16;
+	keycode_maps[15] = 8'h7;
+	keycode_maps[14] = 8'ha;
+	keycode_maps[13] = 8'hb;
+	keycode_maps[12] = 8'hd;
+
 
 end
 
 logic [23:0] sum;
 
-assign sum = scale[0] + scale[1] + scale[2] + scale[3] + scale[4] + scale[5] + scale[6] + scale[7] + scale[8] + scale[9] + scale[10] + scale[11];
+always_comb
+begin
+	sum=0;
+	for (int i=0;i<`NOTES;i++) sum = sum + scale[i];
+end
 
 always_comb
 begin
@@ -113,12 +134,12 @@ begin
 //	scale_counter_cap[10] = 106 / 4; //G#
 //	scale_counter_cap[11] = 95 / 4; //A#
 	
-	for (int i=0;i<12;i++) scale_counter_cap[i] = timing[i];
+	for (int i=0;i<`NOTES;i++) scale_counter_cap[i] = timing[i];
 end
 
 always_comb
 begin
-	for (int i=0;i<12;i=i+1)
+	for (int i=0;i<`NOTES;i=i+1)
 	begin
 		scale[i] = ram[scale_counter[i]];
 	end
@@ -126,7 +147,7 @@ end
 
 always_ff @ (posedge LRCLK)
 begin
-	for (int i=0;i<12;i=i+1)
+	for (int i=0;i<`NOTES;i=i+1)
 	begin
 		if (scale_counter_counter[i] >= scale_counter_cap[i])
 		begin
