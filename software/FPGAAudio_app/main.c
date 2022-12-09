@@ -11,7 +11,8 @@ int main()
 	printf("ALIVE\n");
 
 	while (1) {
-		mary();
+		twinkle();
+		//mary();
 
 		DWORD song = 0;
 		int space = 100000;
@@ -375,3 +376,153 @@ void twinkle() {
 		 8'hd; A#3
 		 */
 }
+
+void among() {
+	int space = 100000;
+	DWORD song;
+	song = 0x08000000; //E
+	tempo(song, space);
+	song = 0x17000000; //G
+	tempo(song,space);
+	song = 0x1c000000; //A
+	tempo(song,space);
+	song = 0x24000000; //Bb
+	tempo(song,space);
+	song = 0x1c000000; //A
+	tempo(song,space);
+	song = 0x17000000; //G
+	tempo(song,space);
+	song = 0x08000000; //E;
+	tempo(song, space * 3 / 2);
+	song = 0x1a000000; //D
+	tempo(song, space / 2);
+	song = 0x22000000; //F#;
+	tempo(song,space / 2);
+	song = 0x08000000; //E
+	tempo(song, space * 4);
+	song = 0;
+	tempo(song, space * 2);
+
+	song = 0x08000000; //E
+		tempo(song, space);
+		song = 0x17000000; //G
+		tempo(song,space);
+		song = 0x1c000000; //A
+		tempo(song,space);
+		song = 0x24000000; //Bb
+		tempo(song,space);
+		song = 0x1c000000; //A
+		tempo(song,space);
+		song = 0x17000000; //G
+		tempo(song,space);
+		song = 0x24000000; //Bb
+		tempo(song, space *7 / 2);
+		song = 0;
+		tempo(song, space / 2);
+		song = 0x24000000; //Bb
+		tempo(song, space * 2 / 3);
+		song = 0x1c000000; //A
+		tempo(song, space * 2 / 3);
+		song = 0x;17000000; //G
+		tempo(song, space * 2 / 3);
+
+		song = 0x24000000; //Bb
+				tempo(song, space * 2 / 3);
+				song = 0x1c000000; //A
+				tempo(song, space * 2 / 3);
+				song = 0x;17000000; //G
+				tempo(song, space * 2 / 3);
+		song = 0x08000000; //E
+		tempo(song, space);
+		song = 0;
+		tempo(song, space);
+
+		song = 0x08000000; //E
+			tempo(song, space);
+			song = 0x17000000; //G
+			tempo(song,space);
+			song = 0x1c000000; //A
+			tempo(song,space);
+			song = 0x24000000; //Bb
+			tempo(song,space);
+			song = 0x1c000000; //A
+			tempo(song,space);
+			song = 0x17000000; //G
+			tempo(song,space);
+			song = 0x08000000; //E;
+			tempo(song, space * 3 / 2);
+			song = 0x1a000000; //D
+			tempo(song, space / 2);
+			song = 0x22000000; //F#;
+			tempo(song,space / 2);
+			song = 0x08000000; //E
+			tempo(song, space * 4);
+			song = 0;
+			tempo(song, space * 2);
+
+			song = 0x08000000; //E
+				tempo(song, space);
+				song = 0x17000000; //G
+				tempo(song,space);
+				song = 0x1c000000; //A
+				tempo(song,space);
+				song = 0x24000000; //Bb
+				tempo(song,space);
+				song = 0x1c000000; //A
+				tempo(song,space);
+				song = 0x17000000; //G
+				tempo(song,space);
+				song = 0x24000000; //Bb
+				tempo(song, space *7 / 2);
+				song = 0;
+				tempo(song, space / 2);
+				song = 0x24000000; //Bb
+				tempo(song, space * 2 / 3);
+				song = 0x1c000000; //A
+				tempo(song, space * 2 / 3);
+				song = 0x;17000000; //G
+				tempo(song, space * 2 / 3);
+
+				song = 0x24000000; //Bb
+						tempo(song, space * 2 / 3);
+						song = 0x1c000000; //A
+						tempo(song, space * 2 / 3);
+						song = 0x;17000000; //G
+						tempo(song, space * 2 / 3);
+				song = 0x08000000; //E
+				tempo(song, space * 4);
+				song = 0;
+				tempo(song, space * 4);
+	/*
+			 8'h14;//C
+			 8'h1a;//D
+			 8'h08;//E
+			 8'h15;//F
+			 8'h17;//G
+			8'h1c;//A
+			 8'h18;//B
+
+			8'h1f;//C#
+			 8'h20;//D#
+			 8'h22;//F#
+			 8'h23;//G#
+			  8'h24;//A#
+
+			 8'h1d; C3 //same config, lower reg
+			8'h1b;D3
+			 8'h6; E3
+			 8'h19; F3
+			8'h5; G3
+			8'h11; A3
+			8'h10;B3
+
+			 8'h16; C#3
+			 8'h7; D#3
+			 8'ha; F#3
+			 8'hb; G#3
+			 8'hd; A#3
+			 */
+
+
+}
+
