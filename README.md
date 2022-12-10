@@ -2,6 +2,8 @@
 
 Two octave digital piano synthesizer with keyboard input and preprogrammed songs.
 
+Play some tunes!
+
 # Instructions to run
 
 Clone or download code from github.
