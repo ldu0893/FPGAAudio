@@ -35,3 +35,9 @@ To play notes using a keyboard, run usb_kb last. To play preprogrammed songs, ru
 If you have mismatched system ID or system timestamp errors when trying to run, go through the whole process once more: Generate HDL -> Compile -> Program -> Generate BSP (x3) -> Build All -> Run
 
 If you have build errors or elf file errors, make sure the pin assignments are correct and that there are no syntax errors in the c code. If you are sure everything is correct, consider restarting Quartus and Eclipse. It has been known to resolve issues. If that doesn't work try recreating the Eclipse projects.
+
+## Note
+
+This was developed as the final project of the UIUC ECE 385 course for Fall 2022. Some material, including SGTL5000 code, USB driver configuration code, and select SV lines were provided and then consequently built upon.
+
+We are not responsible for any cheating that may occur using this respository. ECE 385 is a very fun class, so just don't cheat.
