@@ -38,6 +38,6 @@ If you have build errors or elf file errors, make sure the pin assignments are c
 
 ## Note
 
-This was developed as the final project of the UIUC ECE 385 course for Fall 2022. Some material, including SGTL5000 code, USB driver configuration code, and select SV lines were provided and then consequently built upon.
+This was developed as the final project of the UIUC ECE 385 course for Fall 2022. Some material, including SGTL5000 configuration code, USB driver code, and select SV lines were provided and then consequently built upon.
 
 We are not responsible for any cheating that may occur using this respository. ECE 385 is a very fun class, so just don't cheat.
