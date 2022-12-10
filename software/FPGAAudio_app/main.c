@@ -11,7 +11,7 @@ int main()
 	printf("ALIVE\n");
 
 	while (1) {
-		among();
+		twinkle();
 
 		DWORD song = 0;
 		int space = 100000;
@@ -353,11 +353,13 @@ void twinkle() {
 		 8'h17;//G
 		8'h1c;//A
 		 8'h18;//B
+
 		8'h1f;//C#
 		 8'h20;//D#
 		 8'h22;//F#
 		 8'h23;//G#
 		  8'h24;//A#
+
 		 8'h1d; C3 //same config, lower reg
 		8'h1b;D3
 		 8'h6; E3
@@ -365,6 +367,7 @@ void twinkle() {
 		8'h5; G3
 		8'h11; A3
 		8'h10;B3
+
 		 8'h16; C#3
 		 8'h7; D#3
 		 8'ha; F#3
@@ -447,6 +450,7 @@ void among() {
 			tempo(song,space);
 			song = 0x08000000; //E;
 			tempo(song, space * 3);
+			tempo(song, space * 3 / 2);
 			song = 0x1a000000; //D
 			tempo(song, space / 2);
 			song = 0x22000000; //F#;
@@ -497,11 +501,13 @@ void among() {
 			 8'h17;//G
 			8'h1c;//A
 			 8'h18;//B
+
 			8'h1f;//C#
 			 8'h20;//D#
 			 8'h22;//F#
 			 8'h23;//G#
 			  8'h24;//A#
+
 			 8'h1d; C3 //same config, lower reg
 			8'h1b;D3
 			 8'h6; E3
@@ -509,6 +515,7 @@ void among() {
 			8'h5; G3
 			8'h11; A3
 			8'h10;B3
+
 			 8'h16; C#3
 			 8'h7; D#3
 			 8'ha; F#3
