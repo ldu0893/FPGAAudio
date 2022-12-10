@@ -180,6 +180,10 @@ int main()
 	SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_DAC_VOL, DAC_VOL);
 	printf( "CHIP_DAC_VOL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_DAC_VOL));
 
+	WORD ANA_HP_CTRL = 0x0000;//-? dB
+	SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, ANA_HP_CTRL);
+	printf( "CHIP_ANA_HP_CTRL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL));
+
 
 	return 0;
 }

@@ -12,7 +12,6 @@ int main()
 
 	while (1) {
 		twinkle();
-		//mary();
 
 		DWORD song = 0;
 		int space = 100000;
@@ -393,7 +392,7 @@ void among() {
 	song = 0x17000000; //G
 	tempo(song,space);
 	song = 0x08000000; //E;
-	tempo(song, space * 3 / 2);
+	tempo(song, space * 3);
 	song = 0x1a000000; //D
 	tempo(song, space / 2);
 	song = 0x22000000; //F#;
@@ -423,14 +422,14 @@ void among() {
 		tempo(song, space * 2 / 3);
 		song = 0x1c000000; //A
 		tempo(song, space * 2 / 3);
-		song = 0x;17000000; //G
+		song = 0x17000000; //G
 		tempo(song, space * 2 / 3);
 
 		song = 0x24000000; //Bb
 				tempo(song, space * 2 / 3);
 				song = 0x1c000000; //A
 				tempo(song, space * 2 / 3);
-				song = 0x;17000000; //G
+				song = 0x17000000; //G
 				tempo(song, space * 2 / 3);
 		song = 0x08000000; //E
 		tempo(song, space);
@@ -450,6 +449,7 @@ void among() {
 			song = 0x17000000; //G
 			tempo(song,space);
 			song = 0x08000000; //E;
+			tempo(song, space * 3);
 			tempo(song, space * 3 / 2);
 			song = 0x1a000000; //D
 			tempo(song, space / 2);
@@ -480,14 +480,14 @@ void among() {
 				tempo(song, space * 2 / 3);
 				song = 0x1c000000; //A
 				tempo(song, space * 2 / 3);
-				song = 0x;17000000; //G
+				song = 0x17000000; //G
 				tempo(song, space * 2 / 3);
 
 				song = 0x24000000; //Bb
 						tempo(song, space * 2 / 3);
 						song = 0x1c000000; //A
 						tempo(song, space * 2 / 3);
-						song = 0x;17000000; //G
+						song = 0x17000000; //G
 						tempo(song, space * 2 / 3);
 				song = 0x08000000; //E
 				tempo(song, space * 4);
@@ -525,4 +525,3 @@ void among() {
 
 
 }
-
