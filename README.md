@@ -2,9 +2,9 @@
 
 Two octave digital piano synthesizer with keyboard input and preprogrammed songs.
 
-Play some tunes!
+Play some tunes!🎶🎹🎵
 
-# Instructions to run
+## Instructions to run
 
 Clone or download code from github.
 
@@ -34,7 +34,7 @@ When running, always run sgtl5000_config before any other project.
 
 To play notes using a keyboard, run usb_kb last. To play preprogrammed songs, run FPGAAudio_app last.
 
-# Common issues
+## Common issues
 
 If you have mismatched system ID or system timestamp errors when trying to run, go through the whole process once more: Generate HDL -> Compile -> Program -> Generate BSP (x3) -> Build All -> Run
 
