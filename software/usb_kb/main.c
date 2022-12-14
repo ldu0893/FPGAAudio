@@ -245,6 +245,7 @@ int main() {
 //	BYTE test = MAXreg_rd(revision);
 //	printf("Revision: %x\n", test);
 	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE,0);//no song
+	IOWR_ALTERA_AVALON_PIO_DATA(SONG_1_BASE,0);//no song
 	while (1) {
 		WORD CURR_CTRL = IORD_ALTERA_AVALON_PIO_DATA(SWITCHES_BASE);
 		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, (0x1818 + (CURR_CTRL << 8) + (CURR_CTRL)));

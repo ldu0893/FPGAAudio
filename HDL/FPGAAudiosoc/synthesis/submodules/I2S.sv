@@ -14,7 +14,7 @@ module I2S (
 	
 	input [9:0] SW,
 	input [31:0] keycode,
-	input [31:0] song,
+	input [63:0] song,
 	
 	input [3:0] ram_address,
 	input ram_write,
@@ -79,7 +79,7 @@ logic states [`NOTES];
 
 always_comb
 begin
-	keycode_maps[4] = 8'h14;//C
+	keycode_maps[4] = 8'h14;//C4
 	keycode_maps[3] = 8'h1a;//D
 	keycode_maps[2] = 8'h08;//E
 	keycode_maps[1] = 8'h15;//F
@@ -87,39 +87,39 @@ begin
 	keycode_maps[6] = 8'h1c;//A
 	keycode_maps[5] = 8'h18;//B
 	
-	keycode_maps[7] = 8'h1f;//C#
+	keycode_maps[7] = 8'h1f;//C#4
 	keycode_maps[8] = 8'h20;//D#
 	keycode_maps[9] = 8'h22;//F#
 	keycode_maps[10] = 8'h23;//G#
 	keycode_maps[11] = 8'h24;//A#
 	
-	keycode_maps[23] = 8'h1d;//same config, lower reg
-	keycode_maps[22] = 8'h1b;
-	keycode_maps[21] = 8'h6;
-	keycode_maps[20] = 8'h19;
-	keycode_maps[19] = 8'h5;
-	keycode_maps[18] = 8'h11;
-	keycode_maps[17] = 8'h10;
+	keycode_maps[23] = 8'h1d;//C3
+	keycode_maps[22] = 8'h1b;//D
+	keycode_maps[21] = 8'h6;//E
+	keycode_maps[20] = 8'h19;//F
+	keycode_maps[19] = 8'h5;//G
+	keycode_maps[18] = 8'h11;//A
+	keycode_maps[17] = 8'h10;//B
 
-	keycode_maps[16] = 8'h16;
-	keycode_maps[15] = 8'h7;
-	keycode_maps[14] = 8'ha;
-	keycode_maps[13] = 8'hb;
-	keycode_maps[12] = 8'hd;
+	keycode_maps[16] = 8'h16;//C#3
+	keycode_maps[15] = 8'h7;//D#
+	keycode_maps[14] = 8'ha;//F#
+	keycode_maps[13] = 8'hb;//G#
+	keycode_maps[12] = 8'hd;//A#
 	
-	keycode_maps[35] = 8'h50;
-	keycode_maps[34] = 8'h51;
-	keycode_maps[33] = 8'h52;
-	keycode_maps[32] = 8'h53;
-	keycode_maps[31] = 8'h54;
-	keycode_maps[30] = 8'h55;
-	keycode_maps[29] = 8'h56;
+	keycode_maps[35] = 8'h50;//C5
+	keycode_maps[34] = 8'h51;//D
+	keycode_maps[33] = 8'h52;//E
+	keycode_maps[32] = 8'h53;//F
+	keycode_maps[31] = 8'h54;//G
+	keycode_maps[30] = 8'h55;//H
+	keycode_maps[29] = 8'h56;//I
 
-	keycode_maps[28] = 8'h57;
-	keycode_maps[27] = 8'h58;
-	keycode_maps[26] = 8'h59;
-	keycode_maps[25] = 8'h5a;
-	keycode_maps[24] = 8'h5b;
+	keycode_maps[28] = 8'h57;//C#5
+	keycode_maps[27] = 8'h58;//D#
+	keycode_maps[26] = 8'h59;//F#
+	keycode_maps[25] = 8'h5a;//G#
+	keycode_maps[24] = 8'h5b;//A#
 
 	
 	
@@ -138,19 +138,22 @@ begin
 	keycode_maps[36] = 8'h6b;
 	
 	
-	keycode_maps[59] = 8'h70;
-	keycode_maps[58] = 8'h71;
-	keycode_maps[57] = 8'h72;
-	keycode_maps[56] = 8'h73;
-	keycode_maps[55] = 8'h74;
-	keycode_maps[54] = 8'h75;
-	keycode_maps[53] = 8'h76;
+	keycode_maps[59] = 8'h70;//C2
+	keycode_maps[58] = 8'h71;//D
+	keycode_maps[57] = 8'h72;//E
+	keycode_maps[56] = 8'h73;//F
+	keycode_maps[55] = 8'h74;//G
+	keycode_maps[54] = 8'h75;//A
+	keycode_maps[53] = 8'h76;//B
 	
-	keycode_maps[52] = 8'h77;
-	keycode_maps[51] = 8'h78;
-	keycode_maps[50] = 8'h79;
-	keycode_maps[49] = 8'h7a;
-	keycode_maps[48] = 8'h7b;
+	keycode_maps[52] = 8'h77;//C#2
+	keycode_maps[51] = 8'h78;//D#
+	keycode_maps[50] = 8'h79;//F#
+	keycode_maps[49] = 8'h7a;//G#
+	keycode_maps[48] = 8'h7b;//A#
+	
+	
+	keycode_maps[61] = 8'hf0; //gliss register
 
 end
 
@@ -186,7 +189,11 @@ always_comb
 begin
 	for (int i=0;i<`NOTES;i=i+1)
 	begin
-		scale[i] = ram[scale_counter[i]];
+		if (i == 13 || i == 8 || i == 10 || i == 35)
+		begin
+			scale[i] = (ram[scale_counter[i]] >> timing[63]) & 32'hffffff00;
+		end
+		else scale[i] = ram[scale_counter[i]];
 	end
 end
 
@@ -201,7 +208,11 @@ begin
 			 song[7:0] == keycode_maps[i] ||
 			 song[15:8] == keycode_maps[i] ||
 			 song[23:16] == keycode_maps[i] ||
-			 song[31:24] == keycode_maps[i])
+			 song[31:24] == keycode_maps[i] ||
+			 song[39:32] == keycode_maps[i] ||
+			 song[47:40] == keycode_maps[i] ||
+			 song[55:48] == keycode_maps[i] ||
+			 song[63:56] == keycode_maps[i])
 		begin
 			states[i] <= 1;
 		end
@@ -230,7 +241,11 @@ begin
 				 song[7:0] == keycode_maps[i] ||
 				 song[15:8] == keycode_maps[i] ||
 				 song[23:16] == keycode_maps[i] ||
-				 song[31:24] == keycode_maps[i])
+				 song[31:24] == keycode_maps[i] ||
+				 song[39:32] == keycode_maps[i] ||
+				 song[47:40] == keycode_maps[i] ||
+				 song[55:48] == keycode_maps[i] ||
+				 song[63:56] == keycode_maps[i])
 				 && states[i] == 1)
 			begin
 				scale_counter_counter[i] <= scale_counter_counter[i] + 1;

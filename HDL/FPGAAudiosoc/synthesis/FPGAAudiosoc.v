@@ -16,7 +16,7 @@ module FPGAAudiosoc (
 		output wire        i2s_dout,                       //                        .dout
 		input  wire [9:0]  i2s_sw,                         //                        .sw
 		input  wire [31:0] i2s_keycode,                    //                        .keycode
-		input  wire [31:0] i2s_song,                       //                        .song
+		input  wire [63:0] i2s_song,                       //                        .song
 		input  wire [1:0]  key_external_connection_export, // key_external_connection.export
 		output wire [31:0] keycode_export,                 //                 keycode.export
 		output wire [13:0] leds_export,                    //                    leds.export
@@ -32,6 +32,7 @@ module FPGAAudiosoc (
 		output wire        sdram_wire_ras_n,               //                        .ras_n
 		output wire        sdram_wire_we_n,                //                        .we_n
 		output wire [31:0] song_export,                    //                    song.export
+		output wire [31:0] song1_export,                   //                   song1.export
 		input  wire        spi0_MISO,                      //                    spi0.MISO
 		output wire        spi0_MOSI,                      //                        .MOSI
 		output wire        spi0_SCLK,                      //                        .SCLK
@@ -140,6 +141,11 @@ module FPGAAudiosoc (
 	wire  [31:0] mm_interconnect_0_song_0_s1_writedata;                       // mm_interconnect_0:song_0_s1_writedata -> song_0:writedata
 	wire  [31:0] mm_interconnect_0_switches_s1_readdata;                      // switches:readdata -> mm_interconnect_0:switches_s1_readdata
 	wire   [1:0] mm_interconnect_0_switches_s1_address;                       // mm_interconnect_0:switches_s1_address -> switches:address
+	wire         mm_interconnect_0_song_1_s1_chipselect;                      // mm_interconnect_0:song_1_s1_chipselect -> song_1:chipselect
+	wire  [31:0] mm_interconnect_0_song_1_s1_readdata;                        // song_1:readdata -> mm_interconnect_0:song_1_s1_readdata
+	wire   [1:0] mm_interconnect_0_song_1_s1_address;                         // mm_interconnect_0:song_1_s1_address -> song_1:address
+	wire         mm_interconnect_0_song_1_s1_write;                           // mm_interconnect_0:song_1_s1_write -> song_1:write_n
+	wire  [31:0] mm_interconnect_0_song_1_s1_writedata;                       // mm_interconnect_0:song_1_s1_writedata -> song_1:writedata
 	wire         mm_interconnect_0_spi_0_spi_control_port_chipselect;         // mm_interconnect_0:spi_0_spi_control_port_chipselect -> spi_0:spi_select
 	wire  [15:0] mm_interconnect_0_spi_0_spi_control_port_readdata;           // spi_0:data_to_cpu -> mm_interconnect_0:spi_0_spi_control_port_readdata
 	wire   [2:0] mm_interconnect_0_spi_0_spi_control_port_address;            // mm_interconnect_0:spi_0_spi_control_port_address -> spi_0:mem_addr
@@ -155,7 +161,7 @@ module FPGAAudiosoc (
 	wire         irq_mapper_receiver2_irq;                                    // timer_0:irq -> irq_mapper:receiver2_irq
 	wire         irq_mapper_receiver3_irq;                                    // spi_0:irq -> irq_mapper:receiver3_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [I2S_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, song_0:reset_n, spi_0:reset_n, switches:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
+	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [I2S_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, song_0:reset_n, song_1:reset_n, spi_0:reset_n, switches:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
 	wire         rst_controller_reset_out_reset_req;                          // rst_controller:reset_req -> [nios2_gen2_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 	wire         nios2_gen2_0_debug_reset_request_reset;                      // nios2_gen2_0:debug_reset_request -> [rst_controller:reset_in1, rst_controller_001:reset_in1]
 	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
@@ -363,6 +369,17 @@ module FPGAAudiosoc (
 		.out_port   (song_export)                             // external_connection.export
 	);
 
+	FPGAAudiosoc_keycode song_1 (
+		.clk        (clk_clk),                                //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),        //               reset.reset_n
+		.address    (mm_interconnect_0_song_1_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_song_1_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_song_1_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_song_1_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_song_1_s1_readdata),   //                    .readdata
+		.out_port   (song1_export)                            // external_connection.export
+	);
+
 	FPGAAudiosoc_spi_0 spi_0 (
 		.clk           (clk_clk),                                             //              clk.clk
 		.reset_n       (~rst_controller_reset_out_reset),                     //            reset.reset_n
@@ -520,6 +537,11 @@ module FPGAAudiosoc (
 		.song_0_s1_readdata                             (mm_interconnect_0_song_0_s1_readdata),                        //                                         .readdata
 		.song_0_s1_writedata                            (mm_interconnect_0_song_0_s1_writedata),                       //                                         .writedata
 		.song_0_s1_chipselect                           (mm_interconnect_0_song_0_s1_chipselect),                      //                                         .chipselect
+		.song_1_s1_address                              (mm_interconnect_0_song_1_s1_address),                         //                                song_1_s1.address
+		.song_1_s1_write                                (mm_interconnect_0_song_1_s1_write),                           //                                         .write
+		.song_1_s1_readdata                             (mm_interconnect_0_song_1_s1_readdata),                        //                                         .readdata
+		.song_1_s1_writedata                            (mm_interconnect_0_song_1_s1_writedata),                       //                                         .writedata
+		.song_1_s1_chipselect                           (mm_interconnect_0_song_1_s1_chipselect),                      //                                         .chipselect
 		.spi_0_spi_control_port_address                 (mm_interconnect_0_spi_0_spi_control_port_address),            //                   spi_0_spi_control_port.address
 		.spi_0_spi_control_port_write                   (mm_interconnect_0_spi_0_spi_control_port_write),              //                                         .write
 		.spi_0_spi_control_port_read                    (mm_interconnect_0_spi_0_spi_control_port_read),               //                                         .read
