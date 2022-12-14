@@ -163,7 +163,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.i2s_keycode(keycode),
 		.i2s_song(song),
 		
-		.song_export(song)
+		.song_export(song),
+		
+		.switches_export(SW)
 		
 	 );
 	 

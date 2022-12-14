@@ -36,6 +36,7 @@ module FPGAAudiosoc (
 		output wire        spi0_MOSI,                      //                        .MOSI
 		output wire        spi0_SCLK,                      //                        .SCLK
 		output wire        spi0_SS_n,                      //                        .SS_n
+		input  wire [9:0]  switches_export,                //                switches.export
 		input  wire        usb_gpx_export,                 //                 usb_gpx.export
 		input  wire        usb_irq_export,                 //                 usb_irq.export
 		output wire        usb_rst_export                  //                 usb_rst.export
@@ -82,7 +83,7 @@ module FPGAAudiosoc (
 	wire         mm_interconnect_0_sdram_pll_pll_slave_write;                 // mm_interconnect_0:sdram_pll_pll_slave_write -> sdram_pll:write
 	wire  [31:0] mm_interconnect_0_sdram_pll_pll_slave_writedata;             // mm_interconnect_0:sdram_pll_pll_slave_writedata -> sdram_pll:writedata
 	wire  [31:0] mm_interconnect_0_i2s_0_ram_readdata;                        // I2S_0:ram_readdata -> mm_interconnect_0:I2S_0_ram_readdata
-	wire   [2:0] mm_interconnect_0_i2s_0_ram_address;                         // mm_interconnect_0:I2S_0_ram_address -> I2S_0:ram_address
+	wire   [3:0] mm_interconnect_0_i2s_0_ram_address;                         // mm_interconnect_0:I2S_0_ram_address -> I2S_0:ram_address
 	wire         mm_interconnect_0_i2s_0_ram_write;                           // mm_interconnect_0:I2S_0_ram_write -> I2S_0:ram_write
 	wire  [31:0] mm_interconnect_0_i2s_0_ram_writedata;                       // mm_interconnect_0:I2S_0_ram_writedata -> I2S_0:ram_writedata
 	wire         mm_interconnect_0_onchip_memory2_0_s1_chipselect;            // mm_interconnect_0:onchip_memory2_0_s1_chipselect -> onchip_memory2_0:chipselect
@@ -137,6 +138,8 @@ module FPGAAudiosoc (
 	wire   [1:0] mm_interconnect_0_song_0_s1_address;                         // mm_interconnect_0:song_0_s1_address -> song_0:address
 	wire         mm_interconnect_0_song_0_s1_write;                           // mm_interconnect_0:song_0_s1_write -> song_0:write_n
 	wire  [31:0] mm_interconnect_0_song_0_s1_writedata;                       // mm_interconnect_0:song_0_s1_writedata -> song_0:writedata
+	wire  [31:0] mm_interconnect_0_switches_s1_readdata;                      // switches:readdata -> mm_interconnect_0:switches_s1_readdata
+	wire   [1:0] mm_interconnect_0_switches_s1_address;                       // mm_interconnect_0:switches_s1_address -> switches:address
 	wire         mm_interconnect_0_spi_0_spi_control_port_chipselect;         // mm_interconnect_0:spi_0_spi_control_port_chipselect -> spi_0:spi_select
 	wire  [15:0] mm_interconnect_0_spi_0_spi_control_port_readdata;           // spi_0:data_to_cpu -> mm_interconnect_0:spi_0_spi_control_port_readdata
 	wire   [2:0] mm_interconnect_0_spi_0_spi_control_port_address;            // mm_interconnect_0:spi_0_spi_control_port_address -> spi_0:mem_addr
@@ -144,7 +147,7 @@ module FPGAAudiosoc (
 	wire         mm_interconnect_0_spi_0_spi_control_port_write;              // mm_interconnect_0:spi_0_spi_control_port_write -> spi_0:write_n
 	wire  [15:0] mm_interconnect_0_spi_0_spi_control_port_writedata;          // mm_interconnect_0:spi_0_spi_control_port_writedata -> spi_0:data_from_cpu
 	wire  [15:0] mm_interconnect_0_i2s_0_timing_readdata;                     // I2S_0:timing_readdata -> mm_interconnect_0:I2S_0_timing_readdata
-	wire   [4:0] mm_interconnect_0_i2s_0_timing_address;                      // mm_interconnect_0:I2S_0_timing_address -> I2S_0:timing_address
+	wire   [5:0] mm_interconnect_0_i2s_0_timing_address;                      // mm_interconnect_0:I2S_0_timing_address -> I2S_0:timing_address
 	wire         mm_interconnect_0_i2s_0_timing_write;                        // mm_interconnect_0:I2S_0_timing_write -> I2S_0:timing_write
 	wire  [15:0] mm_interconnect_0_i2s_0_timing_writedata;                    // mm_interconnect_0:I2S_0_timing_writedata -> I2S_0:timing_writedata
 	wire         irq_mapper_receiver0_irq;                                    // i2c_0:intr -> irq_mapper:receiver0_irq
@@ -152,7 +155,7 @@ module FPGAAudiosoc (
 	wire         irq_mapper_receiver2_irq;                                    // timer_0:irq -> irq_mapper:receiver2_irq
 	wire         irq_mapper_receiver3_irq;                                    // spi_0:irq -> irq_mapper:receiver3_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [I2S_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, song_0:reset_n, spi_0:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
+	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [I2S_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, song_0:reset_n, spi_0:reset_n, switches:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
 	wire         rst_controller_reset_out_reset_req;                          // rst_controller:reset_req -> [nios2_gen2_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 	wire         nios2_gen2_0_debug_reset_request_reset;                      // nios2_gen2_0:debug_reset_request -> [rst_controller:reset_in1, rst_controller_001:reset_in1]
 	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
@@ -376,6 +379,14 @@ module FPGAAudiosoc (
 		.SS_n          (spi0_SS_n)                                            //                 .export
 	);
 
+	FPGAAudiosoc_switches switches (
+		.clk      (clk_clk),                                //                 clk.clk
+		.reset_n  (~rst_controller_reset_out_reset),        //               reset.reset_n
+		.address  (mm_interconnect_0_switches_s1_address),  //                  s1.address
+		.readdata (mm_interconnect_0_switches_s1_readdata), //                    .readdata
+		.in_port  (switches_export)                         // external_connection.export
+	);
+
 	FPGAAudiosoc_sysid_qsys_0 sysid_qsys_0 (
 		.clock    (clk_clk),                                               //           clk.clk
 		.reset_n  (~rst_controller_reset_out_reset),                       //         reset.reset_n
@@ -515,6 +526,8 @@ module FPGAAudiosoc (
 		.spi_0_spi_control_port_readdata                (mm_interconnect_0_spi_0_spi_control_port_readdata),           //                                         .readdata
 		.spi_0_spi_control_port_writedata               (mm_interconnect_0_spi_0_spi_control_port_writedata),          //                                         .writedata
 		.spi_0_spi_control_port_chipselect              (mm_interconnect_0_spi_0_spi_control_port_chipselect),         //                                         .chipselect
+		.switches_s1_address                            (mm_interconnect_0_switches_s1_address),                       //                              switches_s1.address
+		.switches_s1_readdata                           (mm_interconnect_0_switches_s1_readdata),                      //                                         .readdata
 		.sysid_qsys_0_control_slave_address             (mm_interconnect_0_sysid_qsys_0_control_slave_address),        //               sysid_qsys_0_control_slave.address
 		.sysid_qsys_0_control_slave_readdata            (mm_interconnect_0_sysid_qsys_0_control_slave_readdata),       //                                         .readdata
 		.timer_0_s1_address                             (mm_interconnect_0_timer_0_s1_address),                        //                               timer_0_s1.address

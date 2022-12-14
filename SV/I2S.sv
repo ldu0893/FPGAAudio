@@ -1,7 +1,7 @@
-`define RAM_SIZE 8
+`define RAM_SIZE 16
 `define LOG_SCALE 10
 
-`define NOTES 24
+`define NOTES 64
 
 module I2S (
 	input CLK,
@@ -16,12 +16,12 @@ module I2S (
 	input [31:0] keycode,
 	input [31:0] song,
 	
-	input [2:0] ram_address,
+	input [3:0] ram_address,
 	input ram_write,
 	input [31:0] ram_writedata,
 	output [31:0] ram_readdata,
 	
-	input [4:0] timing_address,
+	input [5:0] timing_address,
 	input timing_write,
 	input [15:0] timing_writedata,
 	output [15:0] timing_readdata
@@ -29,13 +29,13 @@ module I2S (
 );
 
 logic [23:0] ram [`RAM_SIZE];
-logic [15:0] timing [32];
+logic [15:0] timing [64];
 
 always_ff @ (posedge CLK or posedge RESET)
 begin
 	if (RESET)
 	begin
-		for (int i=0;i<32;i++) timing[i] <= 0;
+		for (int i=0;i<64;i++) timing[i] <= 0;
 	end
 	else if (timing_write) timing[timing_address] <= timing_writedata;
 end
@@ -53,7 +53,7 @@ begin
 	end
 	else if (ram_write)
 	begin
-		ram[ram_address] <= ram_writedata[31:8];
+		ram[ram_address] <= ram_writedata;//COULD THIS BE IT???
 	end
 end
 
@@ -70,11 +70,12 @@ logic [1:0] counter;
 logic [9:0] counter_counter;
 
 logic [23:0] scale [`NOTES];
-logic [8:0] scale_counter_counter [`NOTES];
+logic [15:0] scale_counter_counter [`NOTES];
 logic [`LOG_SCALE:0] scale_counter [`NOTES];
-logic [8:0] scale_counter_cap [`NOTES];
+logic [15:0] scale_counter_cap [`NOTES];
 
 logic [7:0] keycode_maps [`NOTES];
+logic states [`NOTES];
 
 always_comb
 begin
@@ -105,7 +106,51 @@ begin
 	keycode_maps[14] = 8'ha;
 	keycode_maps[13] = 8'hb;
 	keycode_maps[12] = 8'hd;
+	
+	keycode_maps[35] = 8'h50;
+	keycode_maps[34] = 8'h51;
+	keycode_maps[33] = 8'h52;
+	keycode_maps[32] = 8'h53;
+	keycode_maps[31] = 8'h54;
+	keycode_maps[30] = 8'h55;
+	keycode_maps[29] = 8'h56;
 
+	keycode_maps[28] = 8'h57;
+	keycode_maps[27] = 8'h58;
+	keycode_maps[26] = 8'h59;
+	keycode_maps[25] = 8'h5a;
+	keycode_maps[24] = 8'h5b;
+
+	
+	
+	keycode_maps[47] = 8'h60;
+	keycode_maps[46] = 8'h61;
+	keycode_maps[45] = 8'h62;
+	keycode_maps[44] = 8'h63;
+	keycode_maps[43] = 8'h64;
+	keycode_maps[42] = 8'h65;
+	keycode_maps[41] = 8'h66;
+
+	keycode_maps[40] = 8'h67;
+	keycode_maps[39] = 8'h68;
+	keycode_maps[38] = 8'h69;
+	keycode_maps[37] = 8'h6a;
+	keycode_maps[36] = 8'h6b;
+	
+	
+	keycode_maps[59] = 8'h70;
+	keycode_maps[58] = 8'h71;
+	keycode_maps[57] = 8'h72;
+	keycode_maps[56] = 8'h73;
+	keycode_maps[55] = 8'h74;
+	keycode_maps[54] = 8'h75;
+	keycode_maps[53] = 8'h76;
+	
+	keycode_maps[52] = 8'h77;
+	keycode_maps[51] = 8'h78;
+	keycode_maps[50] = 8'h79;
+	keycode_maps[49] = 8'h7a;
+	keycode_maps[48] = 8'h7b;
 
 end
 
@@ -149,6 +194,28 @@ always_ff @ (posedge LRCLK)
 begin
 	for (int i=0;i<`NOTES;i=i+1)
 	begin
+		if (keycode[7:0] == keycode_maps[i] ||
+			 keycode[15:8] == keycode_maps[i] ||
+			 keycode[23:16] == keycode_maps[i] ||
+			 keycode[31:24] == keycode_maps[i] ||
+			 song[7:0] == keycode_maps[i] ||
+			 song[15:8] == keycode_maps[i] ||
+			 song[23:16] == keycode_maps[i] ||
+			 song[31:24] == keycode_maps[i])
+		begin
+			states[i] <= 1;
+		end
+		else
+		begin
+			states[i] <= 0;
+		end
+	end
+end
+
+always_ff @ (posedge SCLK)
+begin
+	for (int i=0;i<`NOTES;i=i+1)
+	begin
 		if (scale_counter_counter[i] >= scale_counter_cap[i])
 		begin
 			scale_counter[i] <= scale_counter[i] + 1;
@@ -156,18 +223,25 @@ begin
 		end
 		else
 		begin
-			if (keycode[7:0] == keycode_maps[i] ||
+			if ((keycode[7:0] == keycode_maps[i] ||
 				 keycode[15:8] == keycode_maps[i] ||
 				 keycode[23:16] == keycode_maps[i] ||
 				 keycode[31:24] == keycode_maps[i] ||
 				 song[7:0] == keycode_maps[i] ||
 				 song[15:8] == keycode_maps[i] ||
 				 song[23:16] == keycode_maps[i] ||
-				 song[31:24] == keycode_maps[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+				 song[31:24] == keycode_maps[i])
+				 && states[i] == 1)
+			begin
+				scale_counter_counter[i] <= scale_counter_counter[i] + 1;
+			end
 			else
 			begin
-				scale_counter_counter[i] <= 0;
-				scale_counter[i] <= 0;
+				if (states[i] == 0)
+				begin
+					scale_counter_counter[i] <= 0;
+					scale_counter[i] <= 0;
+				end
 			end
 		end
 //		if (SW[i]) scale_counter_counter[i] <= scale_counter_counter[i] + 1;

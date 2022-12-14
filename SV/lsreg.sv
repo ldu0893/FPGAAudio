@@ -1,6 +1,7 @@
 module lsreg (
 	input CLK, RESET, load,
 	input [23:0] Din,
+	output [23:0] data_out,
 	output Dout
 );
 
