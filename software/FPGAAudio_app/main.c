@@ -100,7 +100,7 @@ int main()
 		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_DAC_VOL, DAC_VOL);
 		printf( "CHIP_DAC_VOL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_DAC_VOL));
 
-		WORD ANA_HP_CTRL = 0x1818;//-? dB
+		WORD ANA_HP_CTRL = 0x0000;//-? dB
 		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, ANA_HP_CTRL);
 		printf( "CHIP_ANA_HP_CTRL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL));
 
@@ -114,8 +114,9 @@ int main()
 
 	while (1) {
 		CURR_CTRL = IORD_ALTERA_AVALON_PIO_DATA(SWITCHES_BASE);
-		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, (0x1818 + (CURR_CTRL << 8) + (CURR_CTRL & 0xff)));
-		rhapsody();
+		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, (0x0000 + (CURR_CTRL << 8) + (CURR_CTRL & 0xff)));
+		if (CURR_CTRL & 0x200) rhapsody();
+		else if (CURR_CTRL & 0x100) cerebrawl();
 
 		DWORD song = 0;
 		int space = 100000;
@@ -150,7 +151,7 @@ void printSignedHex1(signed char value) {
 	value = value % 100;
 	tens = value / 10;
 	ones = value % 10;
-	tens = value / 10;
+	ten = value / 10;
 	ones = value % 10;
 
 	pio_val &= 0xFF00;
@@ -163,7 +164,8 @@ void printSignedHex1(signed char value) {
 void tempo(QWORD song, int space) {
 	IOWR_ALTERA_AVALON_PIO_DATA(SONG_0_BASE, (song >> 32));
 	IOWR_ALTERA_AVALON_PIO_DATA(SONG_1_BASE, (song & 0xffffffff));
-//	printf("%lld\n", song);
+
+	 l.l//	printf("%lld\n", song)
 	usleep(space);
 
 }

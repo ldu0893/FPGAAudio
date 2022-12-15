@@ -218,7 +218,7 @@ int main() {
 		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_DAC_VOL, DAC_VOL);
 		printf( "CHIP_DAC_VOL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_DAC_VOL));
 
-		WORD ANA_HP_CTRL = 0x1818;//-? dB
+		WORD ANA_HP_CTRL = 0x0000;//-? dB
 		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, ANA_HP_CTRL);
 		printf( "CHIP_ANA_HP_CTRL register: %x\n", SGTL5000_Reg_Rd (i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL));
 
@@ -248,7 +248,7 @@ int main() {
 	IOWR_ALTERA_AVALON_PIO_DATA(SONG_1_BASE,0);//no song
 	while (1) {
 		WORD CURR_CTRL = IORD_ALTERA_AVALON_PIO_DATA(SWITCHES_BASE);
-		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, (0x1818 + (CURR_CTRL << 8) + (CURR_CTRL)));
+		SGTL5000_Reg_Wr(i2c_dev, SGTL5000_CHIP_ANA_HP_CTRL, (0x0000 + (CURR_CTRL << 8) + (CURR_CTRL)));
 		printf(".");
 		MAX3421E_Task();
 		USB_Task();
